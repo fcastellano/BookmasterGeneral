@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Bookmaster General</string>
+    <string name="textview">Search for books!</string>
+    <string name="hint">Title and/or Author</string>
+    <string name="button">Search</string>
+    <string name="action_settings">action_settings</string>
+    <string name="action_share">action_share</string>
+    <string name="activity_details">Book Details</string>
+    <string name="alert_welcome">Hello!</string>
+    <string name="alert_question">What is your name?</string>
+    <string name="alert_ok_button">OK</string>
+    <string name="alert_cancel_button">Cancel</string>
+    <string name="intro_welcome">Welcome,</string>
+    <string name="img_books_cover_desc">Some Books</string>
+</resources>
