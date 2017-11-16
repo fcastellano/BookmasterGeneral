@@ -120,7 +120,7 @@ public class MainActivity
                 Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
 
                 try {
-                    mJSONAdapter.updateData(jsonObject.optJSONArray("docs"));
+                    mJSONAdapter.updateData(jsonObject.getJSONArray("docs"));
                 } catch (Exception e) {
                     e.printStackTrace ();
                     Log.d(getString(R.string.app_name), "Something wrong with " + jsonObject.toString());
