@@ -142,8 +142,10 @@ public class MainActivity
 
                 mJSONAdapter.updateData(mJsonArray);
 
-                // TODO
-                // No data: let the User knows what to do next!
+                // No data: let the User knows it!
+                Toast.makeText(getApplicationContext(),
+                        "Found: " + Integer.toString(mJsonArray.length()) + " books",
+                        Toast.LENGTH_LONG).show();
             }
 
             @Override
