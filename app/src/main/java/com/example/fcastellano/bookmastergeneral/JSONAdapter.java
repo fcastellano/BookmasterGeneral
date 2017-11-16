@@ -1,6 +1,7 @@
 package com.example.fcastellano.bookmastergeneral;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import com.squareup.picasso.Picasso;
 
@@ -50,6 +52,7 @@ public class JSONAdapter extends BaseAdapter {
             holder.thumbnailImageView = (ImageView) view.findViewById(R.id.img_thumbnail);
             holder.titleTextView = (TextView) view.findViewById(R.id.text_title);
             holder.authorTextView = (TextView) view.findViewById(R.id.text_author);
+            holder.publishTextView = (TextView) view.findViewById(R.id.text_publisher);
 
             view.setTag(holder);
         } else {
@@ -72,6 +75,15 @@ public class JSONAdapter extends BaseAdapter {
         // Title & Author
         String bookTitle = "";
         String authorName = "";
+        String publisher = "";
+
+        if (jsonObject != null) {
+            try {
+                Log.d("Prova", jsonObject.toString(2));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (jsonObject.has("title")){
             bookTitle = jsonObject.optString("title");
@@ -86,8 +98,23 @@ public class JSONAdapter extends BaseAdapter {
                         .optString(0, "");
         }
 
+        if (jsonObject.has("publisher")) {
+            publisher += jsonObject
+                    .optJSONArray("publisher")
+                    .optString(0, "N/A");
+        }
+        if (jsonObject.has("publish_place")) {
+            publisher += ", " + jsonObject
+                    .optJSONArray("publish_place")
+                    .optString(0, "N/A");
+        }
+        if (jsonObject.has("first_publish_year")) {
+            publisher += ", " + jsonObject.optString("first_publish_year", "N/A");
+        }
+
         holder.titleTextView.setText(bookTitle);
         holder.authorTextView.setText(authorName);
+        holder.publishTextView.setText(publisher);
 
         return view;
     }
@@ -102,5 +129,6 @@ public class JSONAdapter extends BaseAdapter {
         public ImageView thumbnailImageView;
         public TextView titleTextView;
         public TextView authorTextView;
+        public TextView publishTextView;
     }
 }
