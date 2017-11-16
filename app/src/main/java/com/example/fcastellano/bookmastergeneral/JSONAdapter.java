@@ -53,7 +53,7 @@ public class JSONAdapter extends BaseAdapter {
 
             view.setTag(holder);
         } else {
-            holder = (ViewHolder) view.getTag(position);
+            holder = (ViewHolder) view.getTag();
         }
 
         // Thumbnail
