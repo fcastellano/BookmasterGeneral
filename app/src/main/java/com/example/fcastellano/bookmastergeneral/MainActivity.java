@@ -1,5 +1,6 @@
 package com.example.fcastellano.bookmastergeneral;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -164,6 +166,14 @@ public class MainActivity
 
     @Override
     public void onClick(View view) {
+        /* Hide Soft Keyboard */
+        try {
+            ((InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE))
+                    .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         queryBooks(mainEditText.getText().toString());
     }
 
