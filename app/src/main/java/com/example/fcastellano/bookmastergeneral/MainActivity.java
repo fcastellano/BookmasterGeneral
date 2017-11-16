@@ -126,7 +126,7 @@ public class MainActivity
                 setProgressBarIndeterminateVisibility(false);
                 Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
 
-
+                // Temporary Logging!
                 try {
                     Log.d(getString(R.string.app_name),
                             "Here is what I got:" + jsonObject.toString(2));
@@ -140,13 +140,10 @@ public class MainActivity
                     Log.d(getString(R.string.app_name), e.getLocalizedMessage());
                 }
 
-                if (mJsonArray.length() > 0) {
-                    mJSONAdapter.updateData(mJsonArray);
-                }
+                mJSONAdapter.updateData(mJsonArray);
 
                 // TODO
-                // If all was fine: hide soft keyboard
-                // Otherwise: let the User knows what to do next!
+                // No data: let the User knows what to do next!
             }
 
             @Override
