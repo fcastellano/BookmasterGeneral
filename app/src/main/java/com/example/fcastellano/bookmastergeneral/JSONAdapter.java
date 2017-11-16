@@ -77,8 +77,13 @@ public class JSONAdapter extends BaseAdapter {
             bookTitle = jsonObject.optString("title");
         }
 
-        if (jsonObject.has("author")){
-            authorName = jsonObject.optString("author");
+        if (jsonObject.has("author_name")){
+            // Yes, it seems to me that there is no "author" key,
+            // instead there is almost always an "author_name" key,
+            // an array, usually with one value only... let's use the
+            // first entry for now.
+            authorName = jsonObject.optJSONArray("author_name")
+                        .optString(0, "");
         }
 
         holder.titleTextView.setText(bookTitle);
