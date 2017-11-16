@@ -22,9 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
-// import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -65,11 +67,13 @@ public class MainActivity
         mainButton.setOnClickListener(this);
         mainListView = (ListView) findViewById(R.id.main_listView);
 
-        if (mJSONAdapter != null) {
+        if (mJSONAdapter == null) {
             mJSONAdapter = new JSONAdapter(this, getLayoutInflater());
         }
+
         mainListView.setAdapter(mJSONAdapter);
         mainListView.setOnItemClickListener(this);
+
         displayWelcome();
     }
 
@@ -112,19 +116,35 @@ public class MainActivity
 
         setProgressBarIndeterminateVisibility(true);
 
-        client.get(QUERY_URL + urlString, null, new JsonHttpResponseHandler(){
+        RequestHandle docs = client.get(QUERY_URL + urlString, null, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject){
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                JSONArray mJsonArray = new JSONArray();
                 setProgressBarIndeterminateVisibility(false);
                 Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_SHORT).show();
 
+
                 try {
-                    mJSONAdapter.updateData(jsonObject.getJSONArray("docs"));
-                } catch (Exception e) {
-                    e.printStackTrace ();
-                    Log.d(getString(R.string.app_name), "Something wrong with " + jsonObject.toString());
+                    Log.d(getString(R.string.app_name),
+                            "Here is what I got:" + jsonObject.toString(2));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+                try {
+                    mJsonArray = jsonObject.getJSONArray("docs");
+                } catch (JSONException e) {
+                    Log.d(getString(R.string.app_name), e.getLocalizedMessage());
+                }
+
+                if (mJsonArray.length() > 0) {
+                    mJSONAdapter.updateData(mJsonArray);
+                }
+
+                // TODO
+                // If all was fine: hide soft keyboard
+                // Otherwise: let the User knows what to do next!
             }
 
             @Override
